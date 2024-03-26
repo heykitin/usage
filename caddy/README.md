@@ -72,7 +72,7 @@ cat > /etc/caddy/Caddyfile << EOF
             roll_keep_for 15d
         }
     }
-    email jettwan@outlook.com
+    email t@tt.com
     acme_ca https://acme.zerossl.com/v2/DV90
 }
 
@@ -99,4 +99,20 @@ chown -R caddy:caddy /etc/caddy
 chown -R caddy:caddy /var/lib/caddy
 chown -R caddy:caddy /var/log/caddy
 chown -R caddy:caddy /data/www
+```
+
+5. commad line
+
+```bash
+# rewrite config
+caddy fmt --overwrite /etc/caddy/Caddyfile
+
+# check config
+caddy adapt -c /etc/caddy/Caddyfile
+
+# reload caddy (if set "admin: off", cant use this command)
+caddy reload -c /etc/caddy/Caddyfile
+
+# if set admin off, use systemctl instead
+systemctl restart caddy
 ```
