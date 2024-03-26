@@ -113,7 +113,7 @@ sed -i "s@^datadir=.*@datadir=/data/mariadb@" /etc/init.d/mysql
 chmod +x /etc/init.d/mysql
 ```
 
-Create `my.cnf` see [here](./my.cnf) and configure like follow:
+Create `/etc/my.cnf` see [here](./my.cnf) and configure like follow:
 
 ```bash
 # memory（M）/3
