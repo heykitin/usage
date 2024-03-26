@@ -1,0 +1,21 @@
+server: domain:40000-50000
+
+auth: yourpassword
+
+transport:
+  udp:
+    hopInterval: 30s
+
+tls: 
+  sni: bing.com
+  insecure: true # Change to false if use CA certificate
+
+bandwidth:
+  up: 100 mbps
+  down: 100 mbps
+
+socks5: 
+  listen: 127.0.0.1:10808
+
+http: 
+  listen: 127.0.0.1:10809

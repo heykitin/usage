@@ -1,0 +1,21 @@
+[Unit]
+Description=Waline
+After=network.target
+After=mysqld.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/node/bin/node /usr/local/node/lib/node_modules/@waline/vercel/vanilla.js
+Restart=always
+Environment=PATH=/usr/local/node/bin
+Environment=NODE_ENV=production
+Environment=MYSQL_DB=dbname
+Environment=MYSQL_USER=dbuser
+Environment=MYSQL_PASSWORD=depassword
+Environment=DISABLE_USERAGENT=true
+Environment=DISABLE_REGION=true
+Environment=GRAVATAR_STR=https://seccdn.libravatar.org/avatar/{{mail|md5}}?d=mp
+WorkingDirectory=/usr/local/node/lib/node_modules/@waline/vercel
+
+[Install]
+WantedBy=multi-user.target

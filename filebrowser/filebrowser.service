@@ -1,0 +1,11 @@
+[Unit]
+Description=File Browser
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/filebrowser -d /usr/local/lib/filebrowser/filebrowser.db
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,69 @@
+{
+    "log": {
+        "loglevel": "warning",
+        "error": "/var/log/v2ray/error.log", 
+        "access": "/var/log/v2ray/access.log" 
+    },
+    "inbounds": [
+        {
+            "listen": "127.0.0.1", 
+            "port": 1234, 
+            "protocol": "trojan",
+            "settings": {
+                "clients": [
+                    {
+                        "password": "password", 
+                        "email": "email"
+                    }
+                  ]
+            },
+            "streamSettings": {
+                "network": "h2", // or ws
+                "security": "none",
+                "httpSettings": { // wsSettings for ws
+                    "path": "/path" 
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "direct",
+            "protocol": "freedom",
+            "settings": {}
+        },
+        {
+            "tag": "block",
+            "protocol": "blackhole",
+            "settings": {}
+        }
+    ],
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "domainMatcher": "mph",
+        "rules": [
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "ip": [
+                    "geoip:private",
+                    "geoip:cn"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "block",
+                "domain": [
+                "geosite:category-ads-all"
+                ]
+            }
+        ]
+    }
+}

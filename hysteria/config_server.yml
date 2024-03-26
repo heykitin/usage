@@ -1,0 +1,33 @@
+listen: :8443
+
+acme:
+  domains:
+    - domain.com
+  email: user@email.com
+  ca: zerossl
+
+tls:
+  cert: /path/to/cert.crt
+  key: /path/to/key.key
+
+auth:
+  type: password
+  password: yourpassword
+
+masquerade:
+  type: file
+  file:
+    dir: /data/www/default
+
+  type: proxy
+  proxy:
+    url: https://bing.com
+    rewriteHost: true
+
+  type: string
+  string:
+    content: hello stupid world 
+    headers: 
+      content-type: text/plain
+      custom-stuff: ice cream so good
+    statusCode: 200 

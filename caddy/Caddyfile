@@ -1,0 +1,104 @@
+{
+    # turn off admin
+    admin off
+
+    # log set
+    log {
+        output file /var/log/caddy/access.log {
+            roll_size 100mb
+            roll_keep_for 15d
+        }
+    }
+
+    # tls email
+    email hi@kitin.cn
+
+    # set ca
+    acme_ca https://acme.zerossl.com/v2/DV90 # for  Let's Encrypt's (https://acme-staging-v02.api.letsencrypt.org/directory)
+}
+
+# default site
+domain.com {
+    
+    # site path
+    root * /data/www/default
+    
+    # set headers
+    header {
+        Strict-Transport-Security "max-age=31536000; preload"
+        X-Content-Type-Options nosniff
+        X-Frame-Options SAMEORIGIN
+    }
+    
+    # Basic Authentication
+    ## 1. run caddy hash-password
+    ## 2. input password for twice
+    ## 3. copy the hash to conf
+    basicauth /path/* {
+        user hash-password
+    }
+    
+    # set encodes
+    encode gzip
+    
+    # template document
+    templates {
+        mime text/plain
+    }
+    
+    # set error pages
+    handle_errors {
+        rewrite * /{err.status_code}.html
+        file_server
+    }
+    
+    # set proxy_ws
+    @websockets {
+        path /kitin
+        header Connection *Upgrade*
+        header Upgrade websocket
+    }
+    reverse_proxy @websockets 127.0.0.1:1234 {
+        header_up Host {upstream_hostport}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-Proto https
+    }
+    
+    # set proxy_h2c
+    reverse_proxy /kitin 127.0.0.1:1234 {
+        transport http {
+            versions h2c 2
+        }
+        header_up Host {upstream_hostport}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-Proto https
+    }
+
+    # set proxy to another site
+    reverse_proxy https://m.domain.com {
+        header_up Host {upstream_hostport}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Proto https
+    }
+    
+    # set php
+    php_fastcgi unix//run/php/php8-fpm.sock
+
+    # for oneinstack
+    php_fastcgi unix//dev/shm/php-cgi.sock
+
+    # server file
+    file_server browse
+    
+    # TLS settings
+    tls hi@kitin.cn {
+        acme_ca https://acme.zerossl.com/v2/DV90
+    }
+    tls /path/to/domain.pem /path/to/domain.key
+}
+
+# redir subdomain to main domain
+www.domain.com {
+    redir https://domain.com
+}
