@@ -1,0 +1,104 @@
+{
+  "log": {
+    "level": "warn",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "address": "tcp://8.8.8.8"
+      },
+      {
+        "tag": "local_local",
+        "address": "223.5.5.5",
+        "detour": "direct"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": "any",
+        "server": "local_local"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "type": "socks",
+      "tag": "socks",
+      "listen": "127.0.0.1",
+      "listen_port": 10808,
+      "sniff": true,
+      "sniff_override_destination": true
+    },
+    {
+      "type": "http",
+      "tag": "http",
+      "listen": "127.0.0.1",
+      "listen_port": 10809,
+      "sniff": true,
+      "sniff_override_destination": true
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "hysteria2",
+      "tag": "proxy",
+      "server": "", // ip or dimain
+      "server_port": 1234, // server port
+      "up_mbps": 100, // upload speed
+      "down_mbps": 100, // download speed
+      "password": "", // password
+      "tls": {
+        "enabled": true,
+        "server_name": "", // sni domain
+        "insecure": true, // skip tls secure, if you have CA set to false
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    },
+    {
+      "type": "dns",
+      "tag": "dns_out"
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "outbound": "dns_out",
+        "protocol": [
+          "dns"
+        ]
+      },
+      {
+        "outbound": "block",
+        "geosite": [
+          "category-ads-all" // block ads
+        ]
+      },
+      {
+        "outbound": "direct",
+        "geosite": [
+          "cn" // direct for cn doamin
+        ]
+      },
+      {
+        "outbound": "direct",
+        "geoip": [
+          "private",
+          "cn" // direct for cn ip
+        ]
+      }
+    ]
+  }
+}
