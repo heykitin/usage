@@ -53,7 +53,7 @@ echo "export PATH=/usr/local/nginx/sbin:\$PATH" > /etc/profile.d/nginx.sh
 
 - Create systemd file
 
-Systemd file see [here](./nginx.service) , and then set auto start
+Systemd file `/usr/lib/systemd/system/nginx.service` see [here](./nginx.service) , and then set auto start
 
 ```bash
 systemctl enable nginx
@@ -61,14 +61,19 @@ systemctl enable nginx
 
 - Configure conf file
 
-`nginx.conf` see [here](./nginx.conf) , then add php config
+create bak for `nginx.conf`
+
+```bash
+mv /usr/local/nginx/conf/nginx.conf{,_bk}
+```
+
+`/usr/local/nginx/conf/nginx.conf` see [here](./nginx.conf) , then add php config
 
 ```bash
 [ -z "`grep '/php-fpm_status' /use/conf/nginx.conf`" ] &&  sed -i "s@index index.html index.php;@index index.html index.php;\n    location ~ /php-fpm_status {\n        #fastcgi_pass remote_php_ip:9000;\n        fastcgi_pass unix:/dev/shm/php-cgi.sock;\n        fastcgi_index index.php;\n        include fastcgi.conf;\n        allow 127.0.0.1;\n        deny all;\n        }@" /usr/local/nginx/conf/nginx.conf
 ```
 
-`proxy.conf` see [here](./proxy.conf)
-
+`/usr/local/nginx/conf/proxy.conf` see [here](./proxy.conf)
 
 - Add script and start
 
