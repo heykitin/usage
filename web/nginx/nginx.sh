@@ -5,7 +5,7 @@ export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 ## install nginx
 run_group="www"
 run_user="www"
-wwwlogs_dir="/data/www_log"
+wwwlogs_dir="/data/wwwlogs"
 nginx_install_dir="/usr/local/nginx"
 nginx_ver="1.24.0"
 openssl1_ver="1.1.1w"
@@ -42,7 +42,7 @@ cd nginx-${nginx_ver}
 --with-pcre \
 --with-pcre-jit \
 --with-ld-opt='-ljemalloc'
-make -j ${THREAD} && make install
+make -j $(nproc) && make install
 
 if [ -e "${nginx_install_dir}/conf/nginx.conf" ]; then
     rm -rf openssl-${openssl11_ver} nginx-${nginx_ver}
@@ -54,7 +54,7 @@ else
   fi
 
 echo "export PATH=${nginx_install_dir}/sbin:\$PATH" > /etc/profile.d/nginx.sh
-. /etc/profile
+source /etc/profile
 
 cat > /usr/lib/systemd/system/nginx.service << 'EOF'
 [Unit]

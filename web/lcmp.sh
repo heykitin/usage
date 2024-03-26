@@ -55,7 +55,7 @@ redis_install_dir="/usr/local/redis"
 memcached_install_dir="/usr/local/memcached"
 imagick_install_dir="/usr/local/imagemagick"
 www_dir="/data/www"
-wwwlogs_dir="/data/www_log"
+wwwlogs_dir="/data/wwwlogs"
 dbinstallmethod="1"
 dbrootpwd="kitin@DB0105"
 
