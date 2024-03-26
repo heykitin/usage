@@ -23,7 +23,7 @@ tar zxf openssl-${openssl1_ver}.tar.gz
 - Create dir, install and add environment variables
 
 ```bash
-mkdir -p /usr/local/nginx /data/www/wwwlogs
+mkdir -p /usr/local/nginx /data/www/{wwwlogs,wwwroot}
 cd nginx-${nginx_ver}
 ./configure --prefix=/usr/local/nginx \
 --user=www \
@@ -48,7 +48,7 @@ cd nginx-${nginx_ver}
 make -j$(nproc) && make install
 
 echo "export PATH=/usr/local/nginx/sbin:\$PATH" > /etc/profile.d/nginx.sh
-. /etc/profile
+source /etc/profile
 ```
 
 - Create systemd file
