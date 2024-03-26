@@ -92,7 +92,7 @@ EOF
 caddy fmt --overwrite /etc/caddy/Caddyfile
 ```
 
-4. grant permissions for dir
+2. grant permissions for dir
 
 ```bash
 chown -R caddy:caddy /etc/caddy
@@ -101,7 +101,7 @@ chown -R caddy:caddy /var/log/caddy
 chown -R caddy:caddy /data/www
 ```
 
-5. commad line
+3. commad line
 
 ```bash
 # rewrite config
