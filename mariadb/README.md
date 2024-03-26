@@ -74,6 +74,8 @@ wget https://archive.mariadb.org/mariadb-${mariadb_ver}/bintar-linux-systemd-x86
 wget https://mirrors.tuna.tsinghua.edu.cn/mariadb-${mariadb_ver}/bintar-linux-systemd-x86_64/mariadb-${mariadb_ver}-linux-systemd-x86_64.tar.gz
 ```
 
+- Install
+
 ```bash
 tar zxf boost_${boost_ver2}.tar.gz
 tar zxf mariadb-${mariadb_ver}.tar.gz
