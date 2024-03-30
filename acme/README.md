@@ -23,7 +23,7 @@ cd acme.sh
 
 ### Usage
 
-#### Multiple Issue
+#### Normal Issue
 
 You must point all the domains to you server,and run:
 
