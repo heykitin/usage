@@ -16,7 +16,7 @@ bash <(curl -fsSL https://get.hy2.sh/) --remove
 
 ### Configure Hysteria Server
 
-- See demo [here](./config_server.yaml)
+- See demo [here](./config_server.yml)
 
 ```bash
 vim /etc/hysteria/config.yaml
