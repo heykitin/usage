@@ -12,7 +12,7 @@ passwd
 
 - Change SSH port, base security
 
-run `/vim/etc/ssh/sshd_config` , and configure follow:
+run `vim /etc/ssh/sshd_config` , and configure follow:
 
 ```bash
 Port 1234
