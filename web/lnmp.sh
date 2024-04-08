@@ -571,8 +571,6 @@ groupadd ${run_group}
 useradd -g ${run_group} -M -s /usr/sbin/nologin ${run_user}
 
 cd /usr/local/src
-wget -t0 -c https://nginx.org/download/nginx-${nginx_ver}.tar.gz
-wget -t0 -c https://www.openssl.org/source/old/1.1.1/openssl-${openssl1_ver}.tar.gz
 tar zxf nginx-${nginx_ver}.tar.gz
 tar zxf openssl-${openssl1_ver}.tar.gz
 [ ! -d "${nginx_install_dir}" ] && mkdir -p ${nginx_install_dir}
