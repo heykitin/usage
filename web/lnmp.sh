@@ -55,7 +55,7 @@ redis_install_dir="/usr/local/redis"
 memcached_install_dir="/usr/local/memcached"
 imagick_install_dir="/usr/local/imagemagick"
 www_dir="/data/www"
-wwwlogs_dir="/data/wwwlogs"
+logs_dir="/data/logs"
 dbinstallmethod="1"
 dbrootpwd="kitin@DB0105"
 nginx_install_dir="/usr/local/nginx"
@@ -574,7 +574,7 @@ cd /usr/local/src
 tar zxf nginx-${nginx_ver}.tar.gz
 tar zxf openssl-${openssl1_ver}.tar.gz
 [ ! -d "${nginx_install_dir}" ] && mkdir -p ${nginx_install_dir}
-[ ! -d "${wwwlogs_dir}" ] && mkdir -p ${wwwlogs_dir}
+[ ! -d "${logs_dir}" ] && mkdir -p ${logs_dir}
 cd nginx-${nginx_ver}
 ./configure --prefix=${nginx_install_dir} \
 --user=${run_user} \
@@ -641,7 +641,7 @@ cat > ${nginx_install_dir}/conf/nginx.conf << 'EOF'
 user www www;
 worker_processes auto;
 
-error_log /data/wwwlogs/error_nginx.log crit;
+error_log /data/logs/error_nginx.log crit;
 pid /var/run/nginx.pid;
 worker_rlimit_nofile 51200;
 
@@ -726,8 +726,8 @@ http {
   server {
     listen 80;
     server_name _;
-    access_log /data/wwwlogs/access_nginx.log combined;
-    root /data/wwwroot/default;
+    access_log /data/logs/access_nginx.log combined;
+    root /data/www/default;
     index index.html index.htm index.php;
     #error_page 404 /404.html;
     #error_page 502 /502.html;
@@ -782,12 +782,12 @@ proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
 proxy_set_header X-Forwarded-Proto \$scheme;
 EOF
 
-sed -i "s@/data/wwwroot/default@${wwwroot_dir}/default@" ${nginx_install_dir}/conf/nginx.conf
-sed -i "s@/data/wwwlogs@${wwwlogs_dir}@g" ${nginx_install_dir}/conf/nginx.conf
+sed -i "s@/data/www/default@${www_dir}/default@" ${nginx_install_dir}/conf/nginx.conf
+sed -i "s@/data/logs@${logs_dir}@g" ${nginx_install_dir}/conf/nginx.conf
 sed -i "s@^user www www@user ${run_user} ${run_group}@" ${nginx_install_dir}/conf/nginx.conf
 
 cat > /etc/logrotate.d/nginx << EOF
-${wwwlogs_dir}/*nginx.log {
+${logs_dir}/*nginx.log {
   daily
   rotate 5
   missingok
@@ -1009,6 +1009,6 @@ EOF
 wget -t0 -c https://github.com/kmvan/x-prober/raw/master/dist/prober.php -O xp.php
 wget -t0 -c https://github.com/teddysun/lamp/raw/master/conf/ocp.php
 
-chown -R caddy:caddy ${www_dir}
+chown -R ${run_user}:${run_group} ${www_dir}
 find ${www_dir} -type d -exec chmod 755 {} \;
 find ${www_dir} -type f -exec chmod 644 {} \;
