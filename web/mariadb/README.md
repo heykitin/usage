@@ -52,7 +52,7 @@ wget https://mirrors.tuna.tsinghua.edu.cn/mariadb-${mariadb_ver}/bintar-linux-sy
 
 ```bash
 tar zxf mariadb-${mariadb_ver}-linux-systemd-x86_64.tar.gz
-mv /usr/local/src/mariadb-${mariadb_ver}-linux-systemd-x86_64 /usr/local/mariadb
+mv /usr/local/src/mariadb-${mariadb_ver}-linux-systemd-x86_64/* /usr/local/mariadb
 sed -i 's@executing mysqld_safe@executing mysqld_safe\nexport LD_PRELOAD=/usr/local/lib/libjemalloc.so@' /usr/local/mariadb/bin/mysqld_safe  
 sed -i "s@/usr/local/mysql@/usr/local/mariadb@g" /usr/local/mariadb/bin/mysqld_safe
 ```
