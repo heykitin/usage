@@ -95,7 +95,7 @@ fi
 wget -t0 -c https https://boostorg.jfrog.io/artifactory/main/release/${boost_ver}/source/boost_${boost_ver2}.tar.gz
 
 ## jemalloc
-if [ "${dbinstallmethod}" == "1" ]; then
+if [ "$(get_ip_country)" == "CN" ]; then
 	wget -t0 -c https://gh.kitin.cc/https://github.com/jemalloc/jemalloc/archive/${jemalloc_ver}.tar.gz
 else
 	wget -t0 -c https://github.com/jemalloc/jemalloc/archive/${jemalloc_ver}.tar.gz
