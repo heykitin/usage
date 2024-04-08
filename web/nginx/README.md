@@ -23,7 +23,7 @@ tar zxf openssl-${openssl1_ver}.tar.gz
 - Create dir, install and add environment variables
 
 ```bash
-mkdir -p /usr/local/nginx /data/www/{wwwlogs,wwwroot}
+mkdir -p /usr/local/nginx /data/{logs,www}
 cd nginx-${nginx_ver}
 ./configure --prefix=/usr/local/nginx \
 --user=www \
@@ -79,7 +79,7 @@ mv /usr/local/nginx/conf/nginx.conf{,_bk}
 
 ```bash
 cat > /etc/logrotate.d/nginx << EOF
-/data/wwwlogs/*nginx.log {
+/data/logs/*nginx.log {
   daily
   rotate 5
   missingok
