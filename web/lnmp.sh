@@ -183,7 +183,7 @@ chown -R mysql:mysql ${mariadb_install_dir}
 if [ "${dbinstallmethod}" == "1" ]; then
 	cd /usr/local/src
 	tar zxf mariadb-${mariadb_ver}-linux-systemd-x86_64.tar.gz
-	mv /usr/local/src/mariadb-${mariadb_ver}-linux-systemd-x86_64 ${mariadb_install_dir}
+	mv /usr/local/src/mariadb-${mariadb_ver}-linux-systemd-x86_64/* ${mariadb_install_dir}
 	sed -i 's@executing mysqld_safe@executing mysqld_safe\nexport LD_PRELOAD=/usr/local/lib/libjemalloc.so@' ${mariadb_install_dir}/bin/mysqld_safe  
 	sed -i "s@/usr/local/mysql@${mariadb_install_dir}@g" ${mariadb_install_dir}/bin/mysqld_safe
 elif [ "${dbinstallmethod}" == "2" ]; then
