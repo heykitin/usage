@@ -5,7 +5,7 @@
 1. Create dir, group add user
 
 ```bash
-mkdir -p /etc/caddy
+mkdir -p /etc/caddy/conf.d
 mkdir -p /var/log/caddy
 groupadd caddy
 useradd -g caddy -m -d /var/lib/caddy -s /usr/sbin/nologin caddy
@@ -72,8 +72,6 @@ cat > /etc/caddy/Caddyfile << EOF
             roll_keep_for 15d
         }
     }
-    email t@tt.com
-    acme_ca https://acme.zerossl.com/v2/DV90
 }
 
 :80 {
@@ -85,11 +83,13 @@ cat > /etc/caddy/Caddyfile << EOF
     }
     encode gzip
     # php_fastcgi unix//dev/shm/php-cgi.sock
-    file_server browse
+    file_server
 }
+import /etc/caddy/conf.d/*.conf
 EOF
 
 caddy fmt --overwrite /etc/caddy/Caddyfile
+wget https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index.html -o /data/www/default/index.html
 ```
 
 2. grant permissions for dir
