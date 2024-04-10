@@ -1,0 +1,80 @@
+{
+    "log": {
+        "loglevel": "warning",
+        "error": "/var/log/xray/error.log",
+        "access": "/var/log/xray/access.log"
+    },
+    "inbounds": [
+        {
+            "listen": "0.0.0.0",
+            "port": 1234, //set server port
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "", // Generate uuid: xray uuid
+                        "flow": "xtls-rprx-vision"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "xx.com:443", // target stie, input port for own site
+                    "xver": 0,
+                    "serverNames": [
+                        "xx.com" // // target stie
+                    ],
+                    "privateKey": "", // Generate privateKey and publicKey: xray x25519
+                    "shortIds": [
+                        "" // Generate shortIds: openssl rand -hex 8
+                    ]
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic"
+                ]
+            }
+	}
+    ],
+    "outbounds": [
+        {
+            "tag": "direct",
+            "protocol": "freedom",
+            "settings": {}
+        },
+        {
+            "tag": "block",
+            "protocol": "blackhole",
+            "settings": {}
+        }
+    ],
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "domainMatcher": "mph",
+        "rules": [
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "ip": [
+                    "geoip:private",
+                    "geoip:cn"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "block",
+                "domain": [
+                "geosite:category-ads-all"
+                ]
+            }
+        ]
+    }
+}
