@@ -11,7 +11,7 @@
     }
 
     # tls email
-    email hi@kitin.cn
+    email t@tt.com
 
     # set ca
     acme_ca https://acme.zerossl.com/v2/DV90 # for  Let's Encrypt's (https://acme-staging-v02.api.letsencrypt.org/directory)
@@ -102,3 +102,6 @@ domain.com {
 www.domain.com {
     redir https://domain.com
 }
+
+# import conf
+import /etc/caddy/conf.d/*.conf
