@@ -26,3 +26,23 @@ Default user and password:
 
 Username: `root`
 Password: `123@@@`
+
+For OpenVZ/LXC VPS 
+
+Run command follow
+
+```bash
+wget -qO OsMutation.sh https://raw.githubusercontent.com/LloydAsp/OsMutation/main/OsMutation.sh && chmod u+x OsMutation.sh && ./OsMutation.sh
+```
+
+or 
+
+```bash
+curl -so OsMutation.sh https://raw.githubusercontent.com/LloydAsp/OsMutation/main/OsMutation.sh && chmod u+x OsMutation.sh && ./OsMutation.sh
+```
+
+For vps whose disk is small (less than 1GiB, experimental support)
+
+```bash
+wget -qO OsMutation.sh https://raw.githubusercontent.com/LloydAsp/OsMutation/main/OsMutationTight.sh && chmod u+x OsMutation.sh && ./OsMutation.sh
+```
