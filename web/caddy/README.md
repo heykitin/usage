@@ -89,7 +89,7 @@ import /etc/caddy/conf.d/*.conf
 EOF
 
 caddy fmt --overwrite /etc/caddy/Caddyfile
-wget https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index.html -o /data/www/default/index.html
+wget https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index.html -O /data/www/default/index.html
 ```
 
 2. grant permissions for dir
