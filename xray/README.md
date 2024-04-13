@@ -26,7 +26,7 @@ bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release
 
 ### Configure
 
-Run `vim /etc/usr/local/etc/xray/config.json` to modify config file, see demo [here](./vless-reality-server.json)
+Run `vim /usr/local/etc/xray/config.json` to modify config file, see demo [here](./vless-reality-server.json)
 
 Demo file is use for Vless + Vision + Reality
 
