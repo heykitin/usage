@@ -101,7 +101,15 @@ chown -R caddy:caddy /var/log/caddy
 chown -R caddy:caddy /data/www
 ```
 
-3. commad line
+3. set file and dir permissions
+
+```bash
+chown -R caddy:caddy /data/www/
+find /data/www/ -type d -exec chmod 755 {} \;
+find /data/www/ -type f -exec chmod 644 {} \;
+```
+
+4. commad line
 
 ```bash
 # rewrite config
