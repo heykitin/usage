@@ -70,7 +70,7 @@ cat >> /etc/ufw/before.rules <<EOF
 # port forwarding
 *nat
 :PREROUTING ACCEPT [0:0]
--A PREROUTING -i eth0 -p udp --dport 40000:50000 -j DNAT --to-destination :8443
+-A PREROUTING -i eth0 -p udp --dport 20000:30000 -j DNAT --to-destination :8443
 COMMIT
 EOF
 ```
