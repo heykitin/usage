@@ -47,11 +47,19 @@ ip6tables -t nat -A PREROUTING -i eth0 -p udp --dport 40000:50000 -j DNAT --to-d
 Open ipforward on sysctl
 
 ```bash
-sudo tee /etc/sysctl.d/99-forward.conf >/dev/null <<EOT
+if [ -n "`ip -6 route | grep default`" ]; then 
+cat >> /etc/sysctl.conf << EOF
+# IP Forward
 net.ipv4.ip_forward = 1
 net.ipv6.conf.default.forwarding = 1
 net.ipv6.conf.all.forwarding = 1
-EOT
+EOF
+else
+cat >> /etc/sysctl.conf << EOF
+# IP Forward
+net.ipv4.ip_forward = 1
+EOF
+fi
 
 sysctl --system
 ```
@@ -81,7 +89,7 @@ transport:
 Generate self-signed certificate
 
 ```bash
-openssl req -x509 -nodes -newkey ec:<(openssl ecparam -name prime256v1) -keyout /var/lib/hysteria/server.key -out /var/lib/hysteria/server.crt -subj "/CN=bing.com" -days 3650 && chown hysteria /var/lib/hysteria/server.key && chown hysteria /var/lib/hysteria/server.crt
+openssl req -x509 -nodes -newkey ec:<(openssl ecparam -name prime256v1) -keyout /var/lib/hysteria/server.key -out /var/lib/hysteria/server.crt -subj "/CN=bing.com" -days 36500 && chown hysteria /var/lib/hysteria/server.key && chown hysteria /var/lib/hysteria/server.crt
 ```
 
 ### Directives of Hysteria Server
