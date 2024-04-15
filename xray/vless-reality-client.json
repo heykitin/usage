@@ -14,7 +14,8 @@
                 "enabled": true,
                 "destOverride": [
                     "http",
-                    "tls"
+                    "tls",
+                    "quic"
                 ],
                 "routeOnly": false,
                 "allowTransparent": false
@@ -64,36 +65,35 @@
         },
         {
             "tag": "direct",
-            "protocol": "freedom",
-            "settings": {}
+            "protocol": "freedom"
         },
         {
             "tag": "block",
-            "protocol": "blackhole",
-            "settings": {
-                "response": {
-                    "type": "http"
-                }
-            }
+            "protocol": "blackhole"
         }
     ],
     "dns": {
         "servers": [
-            "1.1.1.1",
-            "8.8.8.8"
+            {
+                "address": "1.1.1.1",
+                "domains": ["geosite:geolocation-!cn"]
+            },
+            {
+                "address": "223.5.5.5",
+                "domains": ["geosite:cn"],
+                "expectIPs": ["geoip:cn"]
+            },
+            {
+                "address": "114.114.114.114",
+                "domains": ["geosite:cn"]
+            },
+            "localhost"
         ]
     },
     "routing": {
         "domainStrategy": "IPIfNonMatch",
-        "domainMatcher": "mph",
+        "domainMatcher": "hybrid",
         "rules": [
-            {
-                "type": "field",
-                "inboundTag": [
-                    "api"
-                ],
-                "outboundTag": "api"
-            },
             {
                 "type": "field",
                 "outboundTag": "block",
@@ -115,6 +115,11 @@
                     "geoip:private",
                     "geoip:cn"
                 ]
+            },
+            {
+                "type": "field",
+                "domain": ["geosite:geolocation-!cn"],
+                "outboundTag": "proxy"
             }
         ]
     }

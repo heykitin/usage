@@ -4,6 +4,12 @@
         "error": "/var/log/xray/error.log",
         "access": "/var/log/xray/access.log"
     },
+    "dns": {
+        "servers": [
+            "https+local://1.1.1.1/dns-query",
+            "localhost"
+        ]
+    },
     "inbounds": [
         {
             "listen": "0.0.0.0",
@@ -47,22 +53,20 @@
     "outbounds": [
         {
             "tag": "direct",
-            "protocol": "freedom",
-            "settings": {}
+            "protocol": "freedom"
         },
         {
             "tag": "block",
-            "protocol": "blackhole",
-            "settings": {}
+            "protocol": "blackhole"
         }
     ],
     "routing": {
         "domainStrategy": "IPIfNonMatch",
-        "domainMatcher": "mph",
+        "domainMatcher": "hybrid",
         "rules": [
             {
                 "type": "field",
-                "outboundTag": "direct",
+                "outboundTag": "block",
                 "ip": [
                     "geoip:private",
                     "geoip:cn"
