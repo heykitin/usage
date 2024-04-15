@@ -4,6 +4,12 @@
         "error": "/var/log/v2ray/error.log", 
         "access": "/var/log/v2ray/access.log" 
     },
+    "dns": {
+        "servers": [
+            "https+local://1.1.1.1/dns-query",
+            "localhost"
+        ]
+    },
     "inbounds": [
         {
             "listen": "127.0.0.1", 
@@ -20,7 +26,7 @@
             },
             "streamSettings": {
                 "network": "h2", // or ws
-                "security": "none",
+                "security": "auto",
                 "httpSettings": { // wsSettings for ws
                     "path": "/path" 
                 }
@@ -29,7 +35,8 @@
                 "enabled": true,
                 "destOverride": [
                     "http",
-                    "tls"
+                    "tls",
+                    "quic"
                 ]
             }
         }
@@ -37,13 +44,11 @@
     "outbounds": [
         {
             "tag": "direct",
-            "protocol": "freedom",
-            "settings": {}
+            "protocol": "freedom"
         },
         {
             "tag": "block",
-            "protocol": "blackhole",
-            "settings": {}
+            "protocol": "blackhole"
         }
     ],
     "routing": {
@@ -52,7 +57,7 @@
         "rules": [
             {
                 "type": "field",
-                "outboundTag": "direct",
+                "outboundTag": "block",
                 "ip": [
                     "geoip:private",
                     "geoip:cn"
