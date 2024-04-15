@@ -72,6 +72,7 @@ cat > /etc/caddy/Caddyfile << EOF
             roll_keep_for 15d
         }
     }
+    email t@tt.com
 }
 
 :80 {
@@ -88,7 +89,7 @@ cat > /etc/caddy/Caddyfile << EOF
 import /etc/caddy/conf.d/*.conf
 EOF
 
-caddy fmt --overwrite /etc/caddy/Caddyfile
+caddy fmt -w /etc/caddy/Caddyfile
 wget https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index.html -O /data/www/default/index.html
 ```
 
@@ -113,12 +114,13 @@ find /data/www/ -type f -exec chmod 644 {} \;
 
 ```bash
 # rewrite config
-caddy fmt --overwrite /etc/caddy/Caddyfile
+caddy fmt -w /etc/caddy/Caddyfile
+caddy fmt -w /etc/caddy/conf.d/*.conf
 
 # check config
 caddy adapt -c /etc/caddy/Caddyfile
 
-# reload caddy (if set "admin: off", cant use this command)
+# reload caddy (if set "admin: off", can not use this command)
 caddy reload -c /etc/caddy/Caddyfile
 
 # if set admin off, use systemctl instead
