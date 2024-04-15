@@ -31,15 +31,15 @@ systemctl start hysteria-server
 
 #### Set port hopping
 
-For example, set port to 40000-50000
+For example, set port to 20000-30000
 
 - iptables
 
 ```bash
 # IPv4
-iptables -t nat -A PREROUTING -i eth0 -p udp --dport 40000:50000 -j DNAT --to-destination :8443
+iptables -t nat -A PREROUTING -i eth0 -p udp --dport 20000:30000 -j DNAT --to-destination :8443
 # IPv6
-ip6tables -t nat -A PREROUTING -i eth0 -p udp --dport 40000:50000 -j DNAT --to-destination :8443
+ip6tables -t nat -A PREROUTING -i eth0 -p udp --dport 20000:30000 -j DNAT --to-destination :8443
 ```
 
 - ufw
@@ -64,8 +64,7 @@ fi
 sysctl --system
 ```
 
-run `ifconfig` to get if-cfg, then edit `/etc/ufw/before.rules` and add:
-
+run `ifconfig` to get if-cfg, then edit `/etc/ufw/before.rules` and add:  
 ```bash
 cat >> /etc/ufw/before.rules <<EOF
 # port forwarding
@@ -76,8 +75,13 @@ COMMIT
 EOF
 ```
 
-Reconfigure hysteria config, add option:
+add ufw rules  
+```bash
+ufw allow 8443
+ufw reload
+```
 
+Reconfigure hysteria config, add option  
 ```yaml
 transport:
   udp:
@@ -86,8 +90,7 @@ transport:
 
 #### Set Certificate
 
-Generate self-signed certificate
-
+Generate self-signed certificate  
 ```bash
 openssl req -x509 -nodes -newkey ec:<(openssl ecparam -name prime256v1) -keyout /var/lib/hysteria/server.key -out /var/lib/hysteria/server.crt -subj "/CN=bing.com" -days 36500 && chown hysteria /var/lib/hysteria/server.key && chown hysteria /var/lib/hysteria/server.crt
 ```
