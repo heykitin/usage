@@ -70,7 +70,7 @@ mv /usr/local/nginx/conf/nginx.conf{,_bk}
 `/usr/local/nginx/conf/nginx.conf` see [here](./nginx.conf) , then add php config
 
 ```bash
-[ -z "`grep '/php-fpm_status' /use/conf/nginx.conf`" ] &&  sed -i "s@index index.html index.php;@index index.html index.php;\n    location ~ /php-fpm_status {\n        #fastcgi_pass remote_php_ip:9000;\n        fastcgi_pass unix:/dev/shm/php-cgi.sock;\n        fastcgi_index index.php;\n        include fastcgi.conf;\n        allow 127.0.0.1;\n        deny all;\n        }@" /usr/local/nginx/conf/nginx.conf
+[ -z "`grep '/php-fpm_status' /use/conf/nginx.conf`" ] &&  sed -i "s@index index.html index.htm index.php;@index index.html index.htm index.php;\n    location ~ /php-fpm_status {\n      #fastcgi_pass remote_php_ip:9000;\n      fastcgi_pass unix:/dev/shm/php-cgi.sock;\n      fastcgi_index index.php;\n      include fastcgi.conf;\n      allow 127.0.0.1;\n      deny all;\n    }@" /usr/local/nginx/conf/nginx.conf
 ```
 
 `/usr/local/nginx/conf/proxy.conf` see [here](./proxy.conf)
