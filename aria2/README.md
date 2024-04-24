@@ -5,7 +5,7 @@
 - Install main soft
 
 ```bash
-wget -N git.io/aria2.sh && chmod +x aria2.sh
+wget -qO aria2.sh https://raw.githubusercontent.com/heykitin/usage/main/aria2/aria2.sh && chmod +x aria2.sh
 ./aria2.sh
 ```
 
